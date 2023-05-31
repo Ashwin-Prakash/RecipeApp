@@ -1,0 +1,51 @@
+{
+  "recipes": [
+    {
+      "title": "Spaghetti Bolognese",
+      "ingredients": [
+        "1 lb ground beef",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "1 can crushed tomatoes (28 oz)",
+        "2 tablespoons tomato paste",
+        "1 teaspoon dried basil",
+        "1 teaspoon dried oregano",
+        "1/2 teaspoon salt",
+        "1/4 teaspoon black pepper",
+        "1/4 cup grated Parmesan cheese",
+        "8 oz spaghetti"
+      ],
+      "steps": [
+        "In a large pot, cook the ground beef over medium heat until browned. Drain excess fat.",
+        "Add the chopped onion and minced garlic to the pot. Cook until the onion is translucent.",
+        "Stir in the crushed tomatoes, tomato paste, dried basil, dried oregano, salt, and black pepper. Simmer for 30 minutes, stirring occasionally.",
+        "Meanwhile, cook the spaghetti according to package instructions until al dente. Drain the spaghetti.",
+        "Serve the spaghetti topped with the Bolognese sauce and sprinkle with grated Parmesan cheese."
+      ]
+    },
+    {
+      "title": "Chocolate Chip Cookies",
+      "ingredients": [
+        "1 cup butter, softened",
+        "1 cup white sugar",
+        "1 cup packed brown sugar",
+        "2 eggs",
+        "1 teaspoon vanilla extract",
+        "3 cups all-purpose flour",
+        "1/2 teaspoon baking soda",
+        "1/2 teaspoon salt",
+        "2 cups semisweet chocolate chips"
+      ],
+      "steps": [
+        "Preheat oven to 350 degrees F (175 degrees C).",
+        "In a large bowl, cream together the butter, white sugar, and brown sugar until smooth.",
+        "Beat in the eggs one at a time, then stir in the vanilla.",
+        "Combine the flour, baking soda, and salt; gradually stir into the creamed mixture.",
+        "Fold in the chocolate chips.",
+        "Drop rounded tablespoons of dough onto ungreased baking sheets.",
+        "Bake for 8 to 10 minutes in the preheated oven, or until golden brown.",
+        "Cool on wire racks."
+      ]
+    }
+  ]
+}
