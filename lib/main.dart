@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe/controller.dart';
 import 'package:recipe/recipe_card.dart';
-import 'package:recipe/recipe.dart';
+// import 'package:recipe/recipe.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -13,28 +13,14 @@ void main() {
   ));
 }
 
-var searchList = [].obs;
-searchRecipe(String item) {
-  searchList.clear();
-  for (Recipe recipe in Get.find<Mycontroller>().recipes) {
-    for (String indg in recipe.ingredients) {
-      if (indg.toLowerCase().contains(item.toLowerCase())) {
-        searchList.add(recipe);
-        break;
-      }
-    }
-  }
-}
-
 class AppBody extends StatelessWidget {
   const AppBody({super.key});
 
   void switchScreen(String item) {
     if (item.trim() == '') {
-      Get.to(() => const RecipeCards());
+      Get.snackbar("Oops", "Enter the ingredient to search.");
     } else {
-      Get.to(() => const SearchResult());
-      searchRecipe(item);
+      Get.to(const SearchResult(), arguments: [item]);
     }
   }
 
@@ -55,39 +41,45 @@ class SearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: searchList.length,
-        itemBuilder: (context, index) {
-          return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient:
-                    const LinearGradient(colors: [Colors.red, Colors.pink]),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    searchList[index].name,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    searchList[index].ingredients.join(', '),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    searchList[index].steps.join(', '),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ],
-              ));
+    return GetBuilder(
+        init: MycontrollerTwo(),
+        builder: (controller) {
+          return ListView.builder(
+              itemCount: controller.searchList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                          colors: [Colors.red, Colors.pink]),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          controller.searchList[index].name,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          controller.searchList[index].ingredients.join(', '),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          controller.searchList[index].steps.join(', '),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ));
+              });
         });
   }
 }

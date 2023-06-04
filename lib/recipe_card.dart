@@ -1,50 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe/controller.dart';
-// import 'package:recipe/recipe.dart';
 
 class RecipeCards extends StatelessWidget {
   const RecipeCards({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Mycontroller>(
-        init: Mycontroller(),
+    return GetBuilder<MycontrollerOne>(
+        init: MycontrollerOne(),
         builder: (controller) {
-          return ListView.builder(
-              itemCount: controller.recipes.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: const LinearGradient(
-                            colors: [Colors.red, Colors.pink])),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          controller.recipes[index].name.toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(controller.recipes[index].ingredients.join(', '),
-                            style: const TextStyle(color: Colors.white)),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(controller.recipes[index].steps.join(', '),
-                            style: const TextStyle(color: Colors.white)),
-                      ],
+          if (controller.recipes.isEmpty) {
+            return const Center(
+              child: Text('Sorry! No Recipes to Show'),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: controller.recipes.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: const LinearGradient(
+                              colors: [Colors.red, Colors.pink])),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            controller.recipes[index].name.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(controller.recipes[index].ingredients.join(', '),
+                              style: const TextStyle(color: Colors.white)),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(controller.recipes[index].steps.join(', '),
+                              style: const TextStyle(color: Colors.white)),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              });
+                  );
+                });
+          }
         });
   }
 }

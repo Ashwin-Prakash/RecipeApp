@@ -3,8 +3,9 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'package:recipe/recipe.dart';
 
-class Mycontroller extends GetxController {
+class MycontrollerOne extends GetxController {
   final List<Recipe> recipes = [];
+
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +19,30 @@ class Mycontroller extends GetxController {
     for (dynamic json in recipeList) {
       Recipe recipe = Recipe.fromJson(json);
       recipes.add(recipe);
+    }
+    update();
+  }
+}
+
+class MycontrollerTwo extends GetxController {
+  List<Recipe> searchList = [];
+  late String item;
+  @override
+  void onInit() {
+    super.onInit();
+    searchRecipe();
+  }
+
+  searchRecipe() {
+    searchList.clear();
+    item = Get.arguments[0];
+    for (Recipe recipe in Get.find<MycontrollerOne>().recipes) {
+      for (String indg in recipe.ingredients) {
+        if (indg.toLowerCase().contains(item.toLowerCase())) {
+          searchList.add(recipe);
+          break;
+        }
+      }
     }
     update();
   }
