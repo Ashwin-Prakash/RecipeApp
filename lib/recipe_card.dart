@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:recipe/recipe.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert';
-
-final List<Recipe> recipes = [];
+import 'package:get/get.dart';
+import 'package:recipe/controller.dart';
+// import 'package:recipe/recipe.dart';
 
 class RecipeCards extends StatelessWidget {
   const RecipeCards({super.key});
 
-  Future<void> readJson() async {
-    final jsonString = await rootBundle.loadString('asset/recipes.json');
-    final jsonData = jsonDecode(jsonString);
-    final List<dynamic> recipeList = jsonData['recipes'];
-    for (dynamic json in recipeList) {
-      Recipe recipe = Recipe.fromJson(json);
-      recipes.add(recipe);
-    }
-    // return recipeList.map((e) => Recipe.fromJson(e)).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: readJson(),
-        builder: (context, snapshot) {
+    return GetBuilder<Mycontroller>(
+        init: Mycontroller(),
+        builder: (controller) {
           return ListView.builder(
-              itemCount: recipes.length,
+              itemCount: controller.recipes.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Container(
@@ -40,18 +27,18 @@ class RecipeCards extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          recipes[index].name.toString(),
+                          controller.recipes[index].name.toString(),
                           style: const TextStyle(color: Colors.white),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(recipes[index].ingredients.join(', '),
+                        Text(controller.recipes[index].ingredients.join(', '),
                             style: const TextStyle(color: Colors.white)),
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(recipes[index].steps.join(', '),
+                        Text(controller.recipes[index].steps.join(', '),
                             style: const TextStyle(color: Colors.white)),
                       ],
                     ),
@@ -62,17 +49,12 @@ class RecipeCards extends StatelessWidget {
   }
 }
 
-class SearchBox extends StatefulWidget {
+class SearchBox extends StatelessWidget {
   final void Function(String item) switchScreen;
   SearchBox(this.switchScreen, {super.key});
 
   final TextEditingController tc = TextEditingController();
 
-  @override
-  State<SearchBox> createState() => _SearchBoxState();
-}
-
-class _SearchBoxState extends State<SearchBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -92,14 +74,14 @@ class _SearchBoxState extends State<SearchBox> {
                     border: InputBorder.none,
                     hintText: 'Search',
                   ),
-                  controller: widget.tc,
+                  controller: tc,
                 ),
               ),
             ),
             ElevatedButton.icon(
               label: const Text('Search'),
               onPressed: () {
-                widget.switchScreen(widget.tc.text);
+                switchScreen(tc.text);
               },
               icon: const Icon(Icons.search),
             )

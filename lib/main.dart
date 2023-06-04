@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:recipe/controller.dart';
 import 'package:recipe/recipe_card.dart';
 import 'package:recipe/recipe.dart';
+import 'package:get/get.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(const GetMaterialApp(
     debugShowCheckedModeBanner: false,
     home: Scaffold(
       body: AppBody(),
@@ -11,10 +13,10 @@ void main() {
   ));
 }
 
-List<Recipe> searchList = [];
+var searchList = [].obs;
 searchRecipe(String item) {
   searchList.clear();
-  for (Recipe recipe in recipes) {
+  for (Recipe recipe in Get.find<Mycontroller>().recipes) {
     for (String indg in recipe.ingredients) {
       if (indg.toLowerCase().contains(item.toLowerCase())) {
         searchList.add(recipe);
@@ -24,36 +26,24 @@ searchRecipe(String item) {
   }
 }
 
-class AppBody extends StatefulWidget {
+class AppBody extends StatelessWidget {
   const AppBody({super.key});
 
-  @override
-  State<AppBody> createState() => _AppBodyState();
-}
-
-class _AppBodyState extends State<AppBody> {
-  String activeScreen = 'RecipeCards';
   void switchScreen(String item) {
-    setState(() {
-      if (item.trim() == '') {
-        activeScreen = 'RecipeCards';
-      } else {
-        activeScreen = 'searchResult';
-        searchRecipe(item);
-      }
-    });
+    if (item.trim() == '') {
+      Get.to(() => const RecipeCards());
+    } else {
+      Get.to(() => const SearchResult());
+      searchRecipe(item);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = const RecipeCards();
-    if (activeScreen == 'searchResult') {
-      screenWidget = const SearchResult();
-    }
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        screenWidget,
+        const RecipeCards(),
         SearchBox(switchScreen),
       ],
     );
